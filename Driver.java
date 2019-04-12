@@ -19,33 +19,33 @@ public class Driver {
 
 		System.out.println("Welcome to the Wonderful Movie Theater program!");
 		System.out.println("	Tonight's features are:");
-		System.out.println("		'Shazam!' and 'Dumbo\n'");
-		
+		System.out.println("		'Shazam!' and 'Dumbo'\n");
+
 		System.out.println("Please specify the size of the Movie Theaters");
-		
-			System.out.println("	Enter the information about the Dumbo Movie Theater:");		
-			System.out.print("		>>Enter number of rows: ");
-				int dumboRows = Integer.parseInt(stdin.readLine());
-				System.out.println(dumboRows);   
-			System.out.print("		>>Enter number of seats in a row: ");
-				int dumboSeats = Integer.parseInt(stdin.readLine());
-				System.out.println(dumboSeats);   
-				
-			System.out.println("	Enter the information about the Shazam! Movie Theater:");		
-			System.out.print("		>>Enter number of rows: ");
-				int shazamRows = Integer.parseInt(stdin.readLine());
-				System.out.println(shazamRows);   
-			System.out.print("		>>Enter number of seats in a row: ");
-				int shazamSeats = Integer.parseInt(stdin.readLine());
-				System.out.println(shazamSeats + "\n");   
-				
-			System.out.print("		>>Enter the price of a ticket: ");
-				double ticketPrice = Double.parseDouble(stdin.readLine());
-				System.out.println(ticketPrice + "\n");
-		
+
+		System.out.println("	Enter the information about the Dumbo Movie Theater:");		
+		System.out.print("		>>Enter number of rows: ");
+		int dumboRows = Integer.parseInt(stdin.readLine());
+		System.out.println(dumboRows);   
+		System.out.print("		>>Enter number of seats in a row: ");
+		int dumboSeats = Integer.parseInt(stdin.readLine());
+		System.out.println(dumboSeats);   
+
+		System.out.println("	Enter the information about the Shazam! Movie Theater:");		
+		System.out.print("		>>Enter number of rows: ");
+		int shazamRows = Integer.parseInt(stdin.readLine());
+		System.out.println(shazamRows);   
+		System.out.print("		>>Enter number of seats in a row: ");
+		int shazamSeats = Integer.parseInt(stdin.readLine());
+		System.out.println(shazamSeats + "\n");   
+
+		System.out.print("		>>Enter the price of a ticket: ");
+		double ticketPrice = Double.parseDouble(stdin.readLine());
+		System.out.println(ticketPrice + "\n");
+
 		Theater dumbo = new Theater(dumboRows, dumboSeats);
 		Theater shazam = new Theater(shazamRows, shazamSeats);
-		
+
 		MovieTheater movieTheater = new MovieTheater(ticketPrice, dumbo, shazam);
 
 		System.out.println("Select from the following menu: ");
@@ -56,14 +56,9 @@ public class Driver {
 		System.out.println("		4. Display info about customers waiting for tickets.");
 		System.out.println("		5. Display seating chart for Shazam! Movie Theater.");
 		System.out.println("		6. Display seating chart for Dumbo Movie Theater.");
-		System.out.println("		7. Display number of tickets sold and total earnings.");
+		System.out.println("		7. Display number of tickets sold and total earnings.\n");
 
-		selection();
-	}
 
-	public static void selection() throws NumberFormatException, IOException {
-
-		System.out.println(" ");
 		System.out.print(">>Make your menu selection now: ");
 		int choice = Integer.parseInt(stdin.readLine());
 
@@ -76,42 +71,101 @@ public class Driver {
 			break;		
 		case 1 :
 			System.out.println(choice);
-			
-			System.out.print("		>>Enter number of rows: ");
-			int shazamRows = Integer.parseInt(stdin.readLine());
-			System.out.println(shazamRows); 
 
-			selection();
+			boolean customerRunning = true;
+			boolean childRunning = true;
+			boolean sizeRunning = true;
+			boolean movieRunning = true;
+			boolean watchDumbo = true;
+
+			int partySize = 0;
+
+			String customerName = "";
+			Customer customer;
+
+			while(customerRunning) {
+				customerRunning = false;
+				System.out.print("		>>Enter customer name: ");
+				customerName = stdin.readLine();
+				System.out.println(customerName);
+
+				if(movieTheater.hasCustomer(customerName)) {
+					System.out.println("Customer " + customerName + " is already in the theater!");
+					System.out.println("Please specify a different name.");
+					customerRunning = true;
+				}
+			}
+
+			while(sizeRunning) {
+				sizeRunning = false;
+				System.out.print("		>>Enter party size: ");
+				partySize = Integer.parseInt(stdin.readLine());
+				System.out.println(partySize);
+
+				if(partySize <= 0) {
+					System.out.println("		Invalid input. Must enter a number greater than 0.");
+					sizeRunning = true;
+				}
+			}
+
+			while(movieRunning) {
+				movieRunning = false;
+				System.out.print("		>>Enter movie name: ");
+				String movieName = stdin.readLine();
+				System.out.println(movieName);
+
+				if(movieName.equalsIgnoreCase("dumbo")) {
+					watchDumbo = true;
+				} else if(movieName.equalsIgnoreCase("shazam!")) {
+					watchDumbo = false;
+				} else {
+					System.out.println("		Invalid input. Must enter 'Dumbo' or 'Shazam!'");
+					movieRunning = true;
+				}
+			}
+
+			while(childRunning) {
+				childRunning = false;
+				System.out.print("		>>Is a child 11 or younger in this party(Y/N)? ");
+				String isChild = stdin.readLine();
+				System.out.println(isChild);
+
+				if(isChild.equalsIgnoreCase("Y")) {
+					customer = new Customer(partySize, customerName, watchDumbo);			
+					movieTheater.addToLine(customer, true);
+				} else if(isChild.equalsIgnoreCase("N")) {
+					customer = new Customer(partySize, customerName, watchDumbo);			
+					movieTheater.addToLine(customer, true);
+				} else {
+					System.out.println("		Invalid input. Must enter 'Y' or 'N'.");
+					childRunning = true;
+				}
+			}
+
 			break;
 		case 2 :
 			System.out.println(choice);
 
-			selection();
 			break;
 		case 3 :
 			System.out.println(choice);
 
-			selection();
 			break;
 		case 4 :
 			System.out.println(choice);
 
-			selection();
 			break;
 		case 5 :
 			System.out.println(choice);
 
-			selection();				
 			break;
 		case 6 :
 			System.out.println(choice);
 
-			selection();
 			break;
 		case 7 :
 			System.out.println(choice);
 
-			selection();
 		}
 	}	
 
