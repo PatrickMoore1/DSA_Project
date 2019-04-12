@@ -3,8 +3,12 @@ public class MovieTheater {
 	double ticketPrice = 0.0;
 	Theater Dumbo;
 	Theater Shazam;
-	
-	
+
+	Queue<Customer> RegLine1;
+	Queue<Customer> RegLine2;
+	Queue<Customer> Express;
+
+
 	public MovieTheater(double ticketPrice, Theater dumbo, Theater shazam) {
 		super();
 		this.ticketPrice = ticketPrice;
@@ -31,7 +35,7 @@ public class MovieTheater {
 	public Theater getShazam() {
 		return Shazam;
 	}
-	
+
 	public boolean hasCustomer(String customerName) {
 		if(customerName.equals("yes")) {
 			return true;
@@ -43,14 +47,32 @@ public class MovieTheater {
 	public void addToLine(Customer customer, boolean hasChild) {
 
 		if(hasChild) {
-			System.out.println("Added with Express");
+			if(RegLine1.getNumItems() < Express.getNumItems()) {
+				if(RegLine2.getNumItems() < RegLine1.getNumItems()) {
+					RegLine2.enqueue(customer);
+					System.out.println("Customer " + customer.getName() + " is in the second ticket line.");
+				} else {
+					RegLine1.enqueue(customer);
+					System.out.println("Customer " + customer.getName() + " is in the first ticket line.");
+				}
+			} else {
+				Express.enqueue(customer);
+				System.out.println("Customer " + customer.getName() + " is in the express ticket line.");
+			}
+
 		} else {
-			System.out.println("Added with in RegLine");
+			if(RegLine2.getNumItems() < RegLine1.getNumItems()) {
+				RegLine2.enqueue(customer);
+				System.out.println("Customer " + customer.getName() + " is in the second ticket line.");
+			} else {
+				RegLine1.enqueue(customer);
+				System.out.println("Customer " + customer.getName() + " is in the first ticket line.");
+			}
 		}
 	}
 
 
-	
-	
+
+
 
 }
