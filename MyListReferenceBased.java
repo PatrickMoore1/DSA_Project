@@ -193,4 +193,16 @@ public class MyListReferenceBased<T> implements ListInterface<T>
 	{
 		return head;
 	}
+
+	public void add(Customer customer) {
+			//ADD CUSTOMER TO END OF LINE
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 } // end ListReferenceBased
