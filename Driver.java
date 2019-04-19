@@ -17,6 +17,8 @@ public class Driver {
 
 	public static void main(String[] args) throws IOException{
 
+		boolean firstLine = true;
+
 		System.out.println("Welcome to the Wonderful Movie Theater program!");
 		System.out.println("	Tonight's features are:");
 		System.out.println("		'Shazam!' and 'Dumbo'\n");
@@ -58,116 +60,160 @@ public class Driver {
 		System.out.println("		6. Display seating chart for Dumbo Movie Theater.");
 		System.out.println("		7. Display number of tickets sold and total earnings.\n");
 
+		boolean running = true;
 
-		System.out.print(">>Make your menu selection now: ");
-		int choice = Integer.parseInt(stdin.readLine());
+		while(running) {
+			System.out.print(">>Make your menu selection now: ");
+			int choice = Integer.parseInt(stdin.readLine());
 
-		switch(choice)
-		{
-		case 0 :
-			System.out.println(choice);   
-			System.out.print("Exiting program...Good Bye");
+			switch(choice)
+			{
+			case 0 :
+				System.out.println(choice);   
+				System.out.print("Exiting program...Good Bye");
+				running = false;
 
-			break;		
-		case 1 :
-			System.out.println(choice);
+				break;		
+			case 1 :
+				System.out.println(choice);
 
-			boolean customerRunning = true;
-			boolean childRunning = true;
-			boolean sizeRunning = true;
-			boolean movieRunning = true;
-			boolean watchDumbo = true;
+				boolean customerRunning = true;
+				boolean childRunning = true;
+				boolean sizeRunning = true;
+				boolean movieRunning = true;
+				boolean watchDumbo = true;
 
-			int partySize = 0;
+				int partySize = 0;
 
-			String customerName = "";
-			Customer customer;
+				String customerName = "";
+				Customer customer;
 
-			while(customerRunning) {
-				customerRunning = false;
-				System.out.print("		>>Enter customer name: ");
-				customerName = stdin.readLine();
-				System.out.println(customerName);
+				while(customerRunning) {
+					customerRunning = false;
+					System.out.print("		>>Enter customer name: ");
+					customerName = stdin.readLine();
+					System.out.println(customerName);
 
-				if(movieTheater.hasCustomer(customerName)) {
-					System.out.println("Customer " + customerName + " is already in the theater!");
-					System.out.println("Please specify a different name.");
-					customerRunning = true;
+					if(movieTheater.hasCustomer(customerName)) {
+						System.out.println("Customer " + customerName + " is already in the theater!");
+						System.out.println("Please specify a different name.");
+						customerRunning = true;
+					}
 				}
-			}
 
-			while(sizeRunning) {
-				sizeRunning = false;
-				System.out.print("		>>Enter party size: ");
-				partySize = Integer.parseInt(stdin.readLine());
-				System.out.println(partySize);
+				while(sizeRunning) {
+					sizeRunning = false;
+					System.out.print("		>>Enter party size: ");
+					partySize = Integer.parseInt(stdin.readLine());
+					System.out.println(partySize);
 
-				if(partySize <= 0) {
-					System.out.println("		Invalid input. Must enter a number greater than 0.");
-					sizeRunning = true;
+					if(partySize <= 0) {
+						System.out.println("		Invalid input. Must enter a number greater than 0.");
+						sizeRunning = true;
+					}
 				}
-			}
 
-			while(movieRunning) {
-				movieRunning = false;
-				System.out.print("		>>Enter movie name: ");
-				String movieName = stdin.readLine();
-				System.out.println(movieName);
+				while(movieRunning) {
+					movieRunning = false;
+					System.out.print("		>>Enter movie name: ");
+					String movieName = stdin.readLine();
+					System.out.println(movieName);
 
-				if(movieName.equalsIgnoreCase("dumbo")) {
-					watchDumbo = true;
-				} else if(movieName.equalsIgnoreCase("shazam!")) {
-					watchDumbo = false;
-				} else {
-					System.out.println("		Invalid input. Must enter 'Dumbo' or 'Shazam!'");
-					movieRunning = true;
+					if(movieName.equalsIgnoreCase("dumbo")) {
+						watchDumbo = true;
+					} else if(movieName.equalsIgnoreCase("shazam!")) {
+						watchDumbo = false;
+					} else {
+						System.out.println("		Invalid input. Must enter 'Dumbo' or 'Shazam!'");
+						movieRunning = true;
+					}
 				}
-			}
 
-			while(childRunning) {
-				childRunning = false;
-				System.out.print("		>>Is a child 11 or younger in this party(Y/N)? ");
-				String isChild = stdin.readLine();
-				System.out.println(isChild);
+				while(childRunning) {
+					childRunning = false;
+					System.out.print("		>>Is a child 11 or younger in this party(Y/N)? ");
+					String isChild = stdin.readLine();
+					System.out.println(isChild);
 
-				if(isChild.equalsIgnoreCase("Y")) {
-					customer = new Customer(partySize, customerName, watchDumbo);			
-					movieTheater.addToLine(customer, true);
-				} else if(isChild.equalsIgnoreCase("N")) {
-					customer = new Customer(partySize, customerName, watchDumbo);			
-					movieTheater.addToLine(customer, true);
-				} else {
-					System.out.println("		Invalid input. Must enter 'Y' or 'N'.");
-					childRunning = true;
+					if(isChild.equalsIgnoreCase("Y")) {
+						customer = new Customer(partySize, customerName, watchDumbo);			
+						movieTheater.addToLine(customer, true);
+					} else if(isChild.equalsIgnoreCase("N")) {
+						customer = new Customer(partySize, customerName, watchDumbo);			
+						movieTheater.addToLine(customer, true);
+					} else {
+						System.out.println("		Invalid input. Must enter 'Y' or 'N'.");
+						childRunning = true;
+					}
 				}
+
+				break;
+			case 2 :
+				System.out.println(choice);
+				boolean lineRunning = true;
+
+				while(lineRunning) {
+					lineRunning = false;
+					if(firstLine) {
+						
+						System.out.print("Which line would you like to serve customers first?(Express/Reg1/Reg2): ");
+						String line = stdin.readLine();
+						System.out.println(line);
+
+						if(line.equalsIgnoreCase("Express")) {
+							movieTheater.serveLine(1);
+							firstLine = false;
+
+						} else if(line.equalsIgnoreCase("Reg1")) {
+							movieTheater.serveLine(2);
+							firstLine = false;
+
+						} else if(line.equalsIgnoreCase("Reg2")) {
+							movieTheater.serveLine(3);
+							firstLine = false;
+
+						} else {
+							lineRunning = true;
+							System.out.println("	Invalid input. Must enter 'Express', 'Reg1', or 'Reg2'.");
+						}
+
+					} else {
+						movieTheater.serveLine(0);
+					}
+				}
+
+
+				break;
+			case 3 :
+				System.out.println(choice);
+				
+				//CHECK IF THEATER IS EMPTY
+				System.out.print(">>Enter customer name to leave Movie Theater: ");
+				String removeName = stdin.readLine();
+				System.out.println(removeName);
+				
+				movieTheater.customerLeaves(removeName);		
+
+				break;
+			case 4 :
+				System.out.println(choice);
+				movieTheater.displayLines();
+
+				break;
+			case 5 :
+				System.out.println(choice);
+
+				break;
+			case 6 :
+				System.out.println(choice);
+
+				break;
+			case 7 :
+				System.out.println(choice);
+
 			}
-
-			break;
-		case 2 :
-			System.out.println(choice);
-
-			break;
-		case 3 :
-			System.out.println(choice);
-
-			break;
-		case 4 :
-			System.out.println(choice);
-
-			break;
-		case 5 :
-			System.out.println(choice);
-
-			break;
-		case 6 :
-			System.out.println(choice);
-
-			break;
-		case 7 :
-			System.out.println(choice);
-
 		}
-	}	
+	}
 
 }
 
