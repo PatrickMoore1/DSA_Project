@@ -24,6 +24,10 @@ public class Theater  {
 	public int getSeatsPerRow() {
 		return seatsPerRow;
 	}
+	
+	public boolean isEmpty() {
+		return filledSeats == 0;
+	}
 
 	public void fillSeat(Customer customer) {
 		int numCust = customer.getSize();
