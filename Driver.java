@@ -180,19 +180,44 @@ public class Driver {
 						}
 
 					} else {
-						movieTheater.serveLine(0);
+						Customer cust = movieTheater.serveLine(0);
+						if(!movieTheater.buyingTickets(cust,0)) {
+							boolean buying = true;
+							while(buying) {
+								buying = false;
+
+								System.out.print("Would you like to see the other movie(Y/N)? ");
+								String other = stdin.readLine();
+								System.out.println(other);
+
+								if(other.equalsIgnoreCase("Y")) {
+									cust.setWatchDumbo(!cust.getWatchDumbo());
+									movieTheater.buyingTickets(cust,1);
+								} else if(other.equalsIgnoreCase("N")) {
+									System.out.println("Customer " + cust.getName() + " left the theater.");
+								} else {
+									System.out.println("Invalid input. Must enter 'Y' or 'N'.");
+									buying = true;
+								}
+							}
+							
+						}
 					}
 				}
 
 				break;
 			case 3 :
 				System.out.println(choice);
+				
+				if(movieTheater.Dumbo.isEmpty() && movieTheater.Shazam.isEmpty()) {
+					System.out.println("No customers are in the movie theater at this time.");
+				} else {
+					System.out.print(">>Enter customer name to leave Movie Theater: ");
+					String removeName = stdin.readLine();
+					System.out.println(removeName);
 
-				System.out.print(">>Enter customer name to leave Movie Theater: ");
-				String removeName = stdin.readLine();
-				System.out.println(removeName);
-
-				movieTheater.customerLeaves(removeName);		
+					movieTheater.customerLeaves(removeName);
+				}		
 
 				break;
 			case 4 :
@@ -203,12 +228,14 @@ public class Driver {
 				break;
 			case 5 :
 				System.out.println(choice);
+				System.out.println("Here is the seating chart for the Shazam! Movie Theater.");
 
 				movieTheater.Shazam.displaySeats();
 
 				break;
 			case 6 :
 				System.out.println(choice);
+				System.out.println("Here is the seating chart for the Dumbo Movie Theater.");
 
 				movieTheater.Dumbo.displaySeats();
 
