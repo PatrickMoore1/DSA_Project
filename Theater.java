@@ -78,7 +78,7 @@ public class Theater  {
 		if((totalSeats - listSize) > party) {
 			findSeats = true;
 		}
-		else if(party < (totalSeats - filledSeats)) {
+		else if((party + filledSeats) <= totalSeats) {
 			int takingSeats = 0;
 			while(!findSeats || currSeat.getNext() != null) {
 				if(currSeat.getItem() == null) {
