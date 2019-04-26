@@ -1,6 +1,12 @@
-
+/**
+ * The Theater Class deals with seating the customers and checking if they can be seated
+ * as well as the number of seats
+ * 
+ * @author Kevin Nguyen
+ *
+ */
 public class Theater  {
-
+	
 	private MyListReferenceBased<Customer> seats = new MyListReferenceBased<Customer>();
 	private int rows = 0;
 	private int seatsPerRow = 0;
@@ -8,30 +14,58 @@ public class Theater  {
 	private int filledSeats = 0;
 	private int currentSeat = 0;
 
-
-	public Theater(int rows, int seatsPerRow) {  //User will be prompted how many rows and how many seats per row
+	/**
+	 * User sets the number of rows and number of seats per row
+	 * 
+	 * @param rows			The number of rows
+	 * @param seatsPerRow	The number of seats per row
+	 */
+	public Theater(int rows, int seatsPerRow) {
 		super();
 		this.rows = rows;
 		this.seatsPerRow = seatsPerRow;
 		totalSeats = rows*seatsPerRow;
 	}
-
+	
+	/**
+	 * Gives back the number of rows
+	 * 
+	 * @return
+	 */
 	public int getRows() {
 		return rows;
 	}  
 
+	/**
+	 * Gives back the number of seats per row
+	 * 
+	 * @return
+	 */
 	public int getSeatsPerRow() {
 		return seatsPerRow;
 	}
 	
+	/**
+	 * Checks if movie is empty
+	 * 
+	 * @return
+	 */
 	public boolean isEmpty() {
 		return filledSeats == 0;
 	}
 	
+	/**
+	 * Checks if movie is full
+	 * @return
+	 */
 	public boolean isMovieFull() {
 		return filledSeats == totalSeats;
 	}
 
+	/**
+	 * Checks if there are seats able to be filled, if not it doesn't, else it adds them
+	 * @param customer		The customer and their information
+	 */
 	public void fillSeat(Customer customer) {
 		int numCust = customer.getSize();
 		int listSize = seats.size();
@@ -41,7 +75,7 @@ public class Theater  {
 		int emptySeats = 0;
 		//if((filledSeats + numCust) < totalSeats) {
 		if((totalSeats - listSize) > numCust) {
-			for(int i = 0; i < numCust; i++) {
+			for(int i = 0; i <= numCust; i++) {
 				seats.add(currentSeat, customer);
 				currentSeat++;
 				filledSeats++;
@@ -72,6 +106,12 @@ public class Theater  {
 		}
 	}
 
+	/**
+	 * Checks if whether the customer (and their group) can be given seats
+	 * @param party		The number of people in the customer's group
+	 * 
+	 * @return
+	 */
 	public boolean canFindSeat(int party) {
 		boolean findSeats = false;
 		int listSize = seats.size();
@@ -99,7 +139,12 @@ public class Theater  {
 		return findSeats;
 	}
 
-
+	/**
+	 * Finds the customer by name
+	 * @param name		The name of the customer
+	 * 
+	 * @return
+	 */
 	public boolean findCustomer(String name) {
 		boolean result = false;
 
@@ -116,6 +161,12 @@ public class Theater  {
 
 	}
 
+	/**
+	 * The customer leaves the movie and their seat becomes empty
+	 * 
+	 * @param custName		The customer name
+	 * @return
+	 */
 	public boolean customerLeave(String custName) {
 		boolean customerFound = false;
 		int amountRemoved = 0;
@@ -138,7 +189,9 @@ public class Theater  {
 	}
 
 	
-
+	/**
+	 * Displays which seats are free and which seats are taken
+	 */
 	public void displaySeats() {
 		Node<Customer> seatCounter = seats.getHead();
 		for(int row = 1; row <= rows; row++) {
