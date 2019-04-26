@@ -83,7 +83,7 @@ public class Theater  {
 		}
 		else if(canFindSeat(numCust)) {
 
-			while(emptySeats < numCust) {
+			while(emptySeats != numCust) {
 				if(searchNode.getItem() == null) {
 					emptySeats++;
 					if(emptySeats == 1) {
@@ -121,7 +121,7 @@ public class Theater  {
 		}
 		else if((party + filledSeats) <= totalSeats) {
 			int takingSeats = 0;
-			while(!findSeats || currSeat.getNext() != null) {
+			while(!findSeats || currSeat != null) {
 				if(currSeat.getItem() == null) {
 					takingSeats++;
 					currSeat = currSeat.getNext();
