@@ -30,4 +30,8 @@ public class Customer {
 	public boolean getWatchDumbo() {
 		return watchDumbo;
 	}
+	
+	public void setWatchDumbo(boolean watchDumbo) {
+		this.watchDumbo = watchDumbo;
+	}
 }
