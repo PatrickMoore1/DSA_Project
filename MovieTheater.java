@@ -16,7 +16,7 @@ public class MovieTheater {
 	double totalTicketSales = 0.0;
 	int DumboTickets = 0;
 	int ShazamTickets = 0;
-	
+
 	int currentLine = 1;
 
 
@@ -52,7 +52,7 @@ public class MovieTheater {
 				RegLine2.findLineCustomer(name)) {
 			custFound = true;
 		} 
-		
+
 		return custFound;
 	}
 
@@ -92,11 +92,12 @@ public class MovieTheater {
 	}
 
 
-	public void serveLine(int firstLine) throws IOException {
+	public Customer serveLine(int firstLine) throws IOException {
 
 		if(firstLine != 0) {
 			currentLine = firstLine;
 		}
+		Customer serving = null;
 
 		boolean notServed = true;
 
@@ -111,9 +112,9 @@ public class MovieTheater {
 						System.out.println("Switching to serve Regular Line 1");
 						currentLine++;
 					} else {
-						Customer serving = Express.get(0);
+						serving = Express.get(0);
 						System.out.println("Serving customer " + serving.getName());
-						buyingTickets(serving);
+						//buyingTickets(serving, 0);
 						Express.remove(0);
 						currentLine++;
 						notServed = false;
@@ -124,9 +125,9 @@ public class MovieTheater {
 						System.out.println("Switching to serve Regular Line 2");
 						currentLine++;
 					} else {
-						Customer serving = RegLine1.get(0);
+						serving = RegLine1.get(0);
 						System.out.println("Serving customer " + serving.getName());
-						buyingTickets(serving);
+						//buyingTickets(serving, 0);
 						RegLine1.remove(0);
 						currentLine++;
 						notServed = false;
@@ -137,9 +138,9 @@ public class MovieTheater {
 						System.out.println("Switching to serve the Express line.");
 						currentLine = 1;
 					} else {
-						Customer serving = RegLine2.get(0);
+						serving = RegLine2.get(0);
 						System.out.println("Serving customer " + serving.getName());
-						buyingTickets(serving);
+						//buyingTickets(serving, 0);
 						RegLine2.remove(0);
 						currentLine = 1;
 						notServed = false;
@@ -147,63 +148,44 @@ public class MovieTheater {
 				}
 			}
 		}
+		return serving;
 	}
 
 
-	private void buyingTickets(Customer cust) throws IOException {
-		int rejected = 0;
-		boolean buying = true;
+	public boolean buyingTickets(Customer cust, int rejected) throws IOException {
+
+		boolean bought = false;
 		boolean isDumbo;
-		boolean playin = true;
 		Theater movie;
 
-		while(playin) {
-			if(cust.getWatchDumbo()) {
-				movie = Dumbo;
-				isDumbo = true;
+		if(cust.getWatchDumbo()) {
+			movie = Dumbo;
+			isDumbo = true;
+		} else {
+			movie = Shazam;
+			isDumbo = false;
+		}
+		if(movie.canFindSeat(cust.getSize())) { 
+			movie.fillSeat(cust);
+			bought = true;
+			totalTicketSales += ticketPrice * cust.getSize();
+			if(isDumbo) {
+				Dumbo = movie;
+				DumboTickets += cust.getSize();
+				System.out.println(cust.getName() + ", party of " + cust.getSize() + " has been seated in the Dumbo Movie Theater.");
 			} else {
-				movie = Shazam;
-				isDumbo = false;
+				Shazam = movie;
+				ShazamTickets += cust.getSize();
+				System.out.println(cust.getName() + ", party of " + cust.getSize() + " has been seated in the Shazam! Movie Theater.");
 			}
-			if(movie.canFindSeat(cust.getSize())) { 
-				movie.fillSeat(cust);
-				totalTicketSales += ticketPrice * cust.getSize();
-				if(isDumbo) {
-					Dumbo = movie;
-					DumboTickets += cust.getSize();
-					System.out.println(cust.getName() + ", party of " + cust.getSize() + " has been seated in the Dumbo Movie Theater.");
-				} else {
-					Shazam = movie;
-					ShazamTickets += cust.getSize();
-					System.out.println(cust.getName() + ", party of " + cust.getSize() + " has been seated in the Shazam! Movie Theater.");
-				}
-				playin = false;
-			} else {
-				System.out.println("Sorry. This movie is sold out.");
-				if(rejected == 1) {
-					System.out.println("Customer " + cust.getName() + " left the theater.");
-					playin = false;
-				} else {
-					rejected++;
-					while(buying) {
-						buying = false;
-
-						System.out.print("Would you like to see the other movie(Y/N)? ");
-						String other = stdin.readLine();
-						System.out.println(other);
-
-						if(other.equalsIgnoreCase("Y")) {
-							cust.setWatchDumbo(!cust.getWatchDumbo());
-						} else if(other.equalsIgnoreCase("N")) {
-							System.out.println("Customer " + cust.getName() + " left the theater.");
-						} else {
-							System.out.println("Invalid input. Must enter 'Y' or 'N'.");
-							buying = true;
-						}
-					}
-				}
+		} else {
+			System.out.println("Sorry. This movie is sold out.");
+			if(rejected == 1) {
+				System.out.println("Customer " + cust.getName() + " left the theater.");
 			}
 		}
+
+		return bought;
 	} 	
 
 
