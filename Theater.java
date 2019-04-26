@@ -113,8 +113,11 @@ public class Theater  {
 		boolean customerFound = false;
 		int amountRemoved = 0;
 		Node<Customer> searchCust = seats.getHead();
-		for(int i = 0; i < totalSeats; i++) {
-			if(!searchCust.getItem().getName().equalsIgnoreCase(custName)) {
+		for(int i = 0; i < totalSeats && searchCust.getNext() != null; i++) {
+			if(searchCust.getItem() == null) {
+				searchCust = searchCust.getNext();
+			}
+			else if(!searchCust.getItem().getName().equalsIgnoreCase(custName)) {
 				searchCust = searchCust.getNext();
 			}
 			else {
@@ -125,10 +128,6 @@ public class Theater  {
 		}
 		filledSeats -= amountRemoved;
 		return customerFound;
-	}
-	
-	public boolean isMovieFull() {
-		return filledSeats == totalSeats;
 	}
 	
 	public void displaySeats() {
