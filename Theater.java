@@ -6,7 +6,7 @@
  *
  */
 public class Theater  {
-	
+
 	private MyListReferenceBased<Customer> seats = new MyListReferenceBased<Customer>();
 	private int rows = 0;
 	private int seatsPerRow = 0;
@@ -26,7 +26,7 @@ public class Theater  {
 		this.seatsPerRow = seatsPerRow;
 		totalSeats = rows*seatsPerRow;
 	}
-	
+
 	/**
 	 * Gives back the number of rows
 	 * 
@@ -44,7 +44,7 @@ public class Theater  {
 	public int getSeatsPerRow() {
 		return seatsPerRow;
 	}
-	
+
 	/**
 	 * Checks if movie is empty
 	 * 
@@ -53,7 +53,7 @@ public class Theater  {
 	public boolean isEmpty() {
 		return filledSeats == 0;
 	}
-	
+
 	/**
 	 * Checks if movie is full
 	 * @return
@@ -74,7 +74,7 @@ public class Theater  {
 		Node<Customer> endNode = null;
 		int emptySeats = 0;
 		//if((filledSeats + numCust) < totalSeats) {
-		if((totalSeats - listSize) > numCust) {
+		if((totalSeats - listSize) >= numCust) {
 			for(int i = 0; i < numCust; i++) {
 				seats.add(currentSeat, customer);
 				currentSeat++;
@@ -116,10 +116,10 @@ public class Theater  {
 		boolean findSeats = false;
 		int listSize = seats.size();
 		Node<Customer> currSeat = seats.getHead();
-		if((totalSeats - listSize) > party) {
+		if((totalSeats - listSize) >= party) {
 			findSeats = true;
 		}
-		else if((party + filledSeats) < totalSeats) {
+		else if((party + filledSeats) <= totalSeats) {
 			int takingSeats = 0;
 			while(!findSeats || currSeat.getNext() != null) {
 				if(currSeat.getItem() == null) {
@@ -147,19 +147,33 @@ public class Theater  {
 	 */
 	public boolean findCustomer(String name) {
 		boolean result = false;
+		boolean searching = true;
 
 		Node<Customer> node = seats.getHead();
-		while(node != null && !result) {
-			if(name.equalsIgnoreCase(node.getItem().getName())) {
-				result = true;
+		while(node != null && !result && searching) {
+			if(node.getItem() != null) {
+				if(node.getItem().getName().equalsIgnoreCase(name)) {
+					result = true;
+				} else {
+					if(node.getNext() != null) {
+						node = node.getNext();
+					} else {
+						searching = false;
+					}
+				}
 			} else {
-				node = node.getNext();
+				if(node.getNext() != null) {
+					node = node.getNext();
+				} else {
+					searching = false;
+				}
 			}
 		}
-
 		return result;
 
 	}
+
+
 
 	/**
 	 * The customer leaves the movie and their seat becomes empty
@@ -188,7 +202,7 @@ public class Theater  {
 		return customerFound;
 	}
 
-	
+
 	/**
 	 * Displays if the seats are empty or not
 	 */
