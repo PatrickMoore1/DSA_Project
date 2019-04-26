@@ -7,7 +7,7 @@ public class Theater  {
 	private int totalSeats;
 	private int filledSeats = 0;
 	private int currentSeat = 0;
-	 private int listSize = seats.size();
+	private int listSize = seats.size();
 
 
 	public Theater(int rows, int seatsPerRow) {  //User will be prompted how many rows and how many seats per row
@@ -28,6 +28,10 @@ public class Theater  {
 	public boolean isEmpty() {
 		return filledSeats == 0;
 	}
+	
+	public boolean isMovieFull() {
+		return filledSeats == totalSeats;
+	}
 
 	public void fillSeat(Customer customer) {
 		int numCust = customer.getSize();
@@ -44,7 +48,7 @@ public class Theater  {
 			}
 		}
 		else if(canFindSeat(numCust)) {
-			
+
 			while(emptySeats < numCust) {
 				if(searchNode.getItem() == null) {
 					emptySeats++;
@@ -70,23 +74,7 @@ public class Theater  {
 			}
 		}
 	}
-	
-		public boolean findCustomer(String name) {
-		boolean result = false;
-		
-		Node<Customer> node = seats.getHead();
-		while(node != null && !result) {
-			if(name.equalsIgnoreCase(node.getItem().getName())) {
-				result = true;
-			} else {
-				node = node.getNext();
-			}
-		}
-		
-		return result;
-		
-	}
-	
+
 	public boolean canFindSeat(int party) {
 		boolean findSeats = false;
 		Node<Customer> currSeat = seats.getHead();
@@ -103,7 +91,7 @@ public class Theater  {
 				else {
 					takingSeats = 0;
 					currSeat = currSeat.getNext();
-					
+
 				}
 				if(takingSeats == party) {
 					findSeats = true;
@@ -111,6 +99,23 @@ public class Theater  {
 			}
 		}
 		return findSeats;
+	}
+
+
+	public boolean findCustomer(String name) {
+		boolean result = false;
+
+		Node<Customer> node = seats.getHead();
+		while(node != null && !result) {
+			if(name.equalsIgnoreCase(node.getItem().getName())) {
+				result = true;
+			} else {
+				node = node.getNext();
+			}
+		}
+
+		return result;
+
 	}
 
 	public boolean customerLeave(String custName) {
@@ -133,7 +138,9 @@ public class Theater  {
 		filledSeats -= amountRemoved;
 		return customerFound;
 	}
+
 	
+
 	public void displaySeats() {
 		Node<Customer> seatCounter = seats.getHead();
 		for(int row = 1; row <= rows; row++) {
