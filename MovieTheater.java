@@ -161,11 +161,16 @@ public class MovieTheater {
 		if(cust.getWatchDumbo()) {
 			movie = Dumbo;
 			isDumbo = true;
+			System.out.println("Seeing Dumbo");
+
 		} else {
 			movie = Shazam;
 			isDumbo = false;
+			System.out.println("Seeing Shazam");
+
 		}
 		if(movie.canFindSeat(cust.getSize())) { 
+			System.out.println("Success?");
 			movie.fillSeat(cust);
 			bought = true;
 			totalTicketSales += ticketPrice * cust.getSize();
