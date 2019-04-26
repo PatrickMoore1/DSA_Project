@@ -27,6 +27,10 @@ public class Theater  {
 
 	public void fillSeat(Customer customer) {
 		int numCust = customer.getSize();
+		Node<Customer> searchNode = seats.getHead();
+		Node<Customer> startNode = null;
+		Node<Customer> endNode = null;
+		int emptySeats = 0;
 		//if((filledSeats + numCust) < totalSeats) {
 		if((totalSeats - listSize) > numCust) {
 			for(int i = 0; i < numCust; i++) {
@@ -35,8 +39,31 @@ public class Theater  {
 				filledSeats++;
 			}
 		}
+		else if(canFindSeat(numCust)) {
+			
+			while(emptySeats < numCust) {
+				if(searchNode.getItem() == null) {
+					emptySeats++;
+					if(emptySeats == 1) {
+						startNode = searchNode;
+					}
+					searchNode = searchNode.getNext();
+				}
+				else {
+					emptySeats = 0;
+					searchNode = searchNode.getNext();
+				}
+			}
+			endNode = searchNode;
+		}
+		if(emptySeats != numCust) {
+			System.out.println("Not enough seats ajacent for party");
+		}
 		else {
-			System.out.println("No more seats");
+			while(!(startNode.equals(endNode))) {
+				startNode.setItem(customer);
+				startNode = startNode.getNext();
+			}
 		}
 	}
 	
@@ -55,6 +82,8 @@ public class Theater  {
 				}
 				else {
 					takingSeats = 0;
+					currSeat = currSeat.getNext();
+					
 				}
 				if(takingSeats == party) {
 					findSeats = true;
