@@ -58,19 +58,20 @@ public class Driver {
 		System.out.println("		4. Display info about customers waiting for tickets.");
 		System.out.println("		5. Display seating chart for Shazam! Movie Theater.");
 		System.out.println("		6. Display seating chart for Dumbo Movie Theater.");
-		System.out.println("		7. Display number of tickets sold and total earnings.\n");
+		System.out.println("		7. Display number of tickets sold and total earnings.");
 
 		boolean running = true;
 
 		while(running) {
-			System.out.print(">>Make your menu selection now: ");
+			System.out.print("\n>>Make your menu selection now: ");
 			int choice = Integer.parseInt(stdin.readLine());
 
 			switch(choice)
 			{
 			case 0 :
 				System.out.println(choice);   
-				System.out.print("Exiting program...Good Bye");
+				System.out.println("The Wonderful Movie Theater who earned $" + movieTheater.getTotalTicketSales() + " kicks out remaining customers and closes...");
+				System.out.println("Good Bye!");   
 				running = false;
 
 				break;		
@@ -95,7 +96,7 @@ public class Driver {
 					System.out.println(customerName);
 
 					if(movieTheater.hasCustomer(customerName)) {
-						System.out.println("Customer " + customerName + " is already in the theater!");
+						System.out.println("Customer " + customerName + " is already in the theater.");
 						System.out.println("Please specify a different name.");
 						customerRunning = true;
 					}
@@ -140,7 +141,7 @@ public class Driver {
 						movieTheater.addToLine(customer, true);
 					} else if(isChild.equalsIgnoreCase("N")) {
 						customer = new Customer(partySize, customerName, watchDumbo);			
-						movieTheater.addToLine(customer, true);
+						movieTheater.addToLine(customer, false);
 					} else {
 						System.out.println("		Invalid input. Must enter 'Y' or 'N'.");
 						childRunning = true;
@@ -150,12 +151,13 @@ public class Driver {
 				break;
 			case 2 :
 				System.out.println(choice);
+
 				boolean lineRunning = true;
 
 				while(lineRunning) {
 					lineRunning = false;
 					if(firstLine) {
-						
+
 						System.out.print("Which line would you like to serve customers first?(Express/Reg1/Reg2): ");
 						String line = stdin.readLine();
 						System.out.println(line);
@@ -182,34 +184,39 @@ public class Driver {
 					}
 				}
 
-
 				break;
 			case 3 :
 				System.out.println(choice);
-				
-				//CHECK IF THEATER IS EMPTY
+
 				System.out.print(">>Enter customer name to leave Movie Theater: ");
 				String removeName = stdin.readLine();
 				System.out.println(removeName);
-				
+
 				movieTheater.customerLeaves(removeName);		
 
 				break;
 			case 4 :
 				System.out.println(choice);
+
 				movieTheater.displayLines();
 
 				break;
 			case 5 :
 				System.out.println(choice);
 
+				movieTheater.Shazam.displaySeats();
+
 				break;
 			case 6 :
 				System.out.println(choice);
 
+				movieTheater.Dumbo.displaySeats();
+
 				break;
 			case 7 :
 				System.out.println(choice);
+
+				movieTheater.ticketSales();
 
 			}
 		}
