@@ -1,12 +1,13 @@
 
 public class Theater  {
 
+	private MyListReferenceBased<Customer> seats = new MyListReferenceBased<Customer>();
 	private int rows = 0;
 	private int seatsPerRow = 0;
 	private int totalSeats;
 	private int filledSeats = 0;
 	private int currentSeat = 0;
-	private MyListReferenceBased<Customer> seats = new MyListReferenceBased<Customer>(); 
+	 private int listSize = seats.size();
 
 
 	public Theater(int rows, int seatsPerRow) {  //User will be prompted how many rows and how many seats per row
@@ -26,7 +27,8 @@ public class Theater  {
 
 	public void fillSeat(Customer customer) {
 		int numCust = customer.getSize();
-		if((filledSeats + numCust) < totalSeats) {
+		//if((filledSeats + numCust) < totalSeats) {
+		if((totalSeats - listSize) > numCust) {
 			for(int i = 0; i < numCust; i++) {
 				seats.add(currentSeat, customer);
 				currentSeat++;
@@ -36,6 +38,30 @@ public class Theater  {
 		else {
 			System.out.println("No more seats");
 		}
+	}
+	
+	public boolean canFindSeat(int party) {
+		boolean findSeats = false;
+		Node<Customer> currSeat = seats.getHead();
+		if((totalSeats - listSize) > party) {
+			findSeats = true;
+		}
+		else if(party < (totalSeats - filledSeats)) {
+			int takingSeats = 0;
+			while(!findSeats || currSeat.getNext() != null) {
+				if(currSeat.getItem() == null) {
+					takingSeats++;
+					currSeat = currSeat.getNext();
+				}
+				else {
+					takingSeats = 0;
+				}
+				if(takingSeats == party) {
+					findSeats = true;
+				}
+			}
+		}
+		return findSeats;
 	}
 
 	public boolean customerLeave(String custName) {
