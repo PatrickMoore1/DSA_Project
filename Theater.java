@@ -83,7 +83,7 @@ public class Theater  {
 		}
 		else if(canFindSeat(numCust)) {
 
-			while(emptySeats != numCust) {
+			while(emptySeats < numCust) {
 				if(searchNode.getItem() == null) {
 					emptySeats++;
 					if(emptySeats == 1) {
@@ -119,9 +119,9 @@ public class Theater  {
 		if((totalSeats - listSize) > party) {
 			findSeats = true;
 		}
-		else if((party + filledSeats) <= totalSeats) {
+		else if((party + filledSeats) < totalSeats) {
 			int takingSeats = 0;
-			while(!findSeats || currSeat != null) {
+			while(!findSeats || currSeat.getNext() != null) {
 				if(currSeat.getItem() == null) {
 					takingSeats++;
 					currSeat = currSeat.getNext();
@@ -190,7 +190,7 @@ public class Theater  {
 
 	
 	/**
-	 * Displays which seats are free and which seats are taken
+	 * Displays if the seats are empty or not
 	 */
 	public void displaySeats() {
 		Node<Customer> seatCounter = seats.getHead();
