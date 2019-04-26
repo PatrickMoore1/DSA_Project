@@ -60,16 +60,19 @@ public class Theater  {
 		return filledSeats == totalSeats;
 	}
 	
-		public void displaySeats() {
+	public void displaySeats() {
 		Node<Customer> seatCounter = seats.getHead();
-		for(int row = 1; row < rows; row++) {
-			for(int seat = 1; seat < seatsPerRow; seat++) {
+		for(int row = 1; row <= rows; row++) {
+			for(int seat = 1; seat <= seatsPerRow; seat++) {
+				if(seatCounter.getNext() == null) {
+					System.out.println("Row " + row + " seat " + seat + "is free.");
+				}
 				if(seatCounter.getItem() != null) {
 					String name = seatCounter.getItem().getName();
 					System.out.println("Row " + row + " seat " + seat + "is used by " + name +"'s party.");
 					seatCounter = seatCounter.getNext();
 				}
-				else {
+				else if(seatCounter.getItem() != null){
 					System.out.println("Row " + row + " seat " + seat + "is free.");
 					seatCounter = seatCounter.getNext();
 				}
