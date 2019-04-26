@@ -67,6 +67,22 @@ public class Theater  {
 		}
 	}
 	
+		public boolean findCustomer(String name) {
+		boolean result = false;
+		
+		Node<Customer> node = seats.getHead();
+		while(node != null && !result) {
+			if(name.equalsIgnoreCase(node.getItem().getName())) {
+				result = true;
+			} else {
+				node = node.getNext();
+			}
+		}
+		
+		return result;
+		
+	}
+	
 	public boolean canFindSeat(int party) {
 		boolean findSeats = false;
 		Node<Customer> currSeat = seats.getHead();
