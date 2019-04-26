@@ -59,4 +59,21 @@ public class Theater  {
 	public boolean isMovieFull() {
 		return filledSeats == totalSeats;
 	}
+	
+		public void displaySeats() {
+		Node<Customer> seatCounter = seats.getHead();
+		for(int row = 1; row < rows; row++) {
+			for(int seat = 1; seat < seatsPerRow; seat++) {
+				if(seatCounter.getItem() != null) {
+					String name = seatCounter.getItem().getName();
+					System.out.println("Row " + row + " seat " + seat + "is used by " + name +"'s party.");
+					seatCounter = seatCounter.getNext();
+				}
+				else {
+					System.out.println("Row " + row + " seat " + seat + "is free.");
+					seatCounter = seatCounter.getNext();
+				}
+			}
+		}
+	}
 }
