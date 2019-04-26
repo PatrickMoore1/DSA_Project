@@ -74,7 +74,7 @@ public class Theater  {
 		Node<Customer> endNode = null;
 		int emptySeats = 0;
 		//if((filledSeats + numCust) < totalSeats) {
-		if((totalSeats - listSize) >= numCust) {
+		if((totalSeats - listSize) > numCust) {
 			for(int i = 0; i < numCust; i++) {
 				seats.add(currentSeat, customer);
 				currentSeat++;
@@ -119,7 +119,7 @@ public class Theater  {
 		if((totalSeats - listSize) > party) {
 			findSeats = true;
 		}
-		else if((party + filledSeats) < totalSeats) {
+		else if((party + filledSeats) <= totalSeats) {
 			int takingSeats = 0;
 			while(!findSeats || currSeat.getNext() != null) {
 				if(currSeat.getItem() == null) {
