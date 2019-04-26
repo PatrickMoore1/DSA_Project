@@ -7,7 +7,6 @@ public class Theater  {
 	private int totalSeats;
 	private int filledSeats = 0;
 	private int currentSeat = 0;
-	private int listSize = seats.size();
 
 
 	public Theater(int rows, int seatsPerRow) {  //User will be prompted how many rows and how many seats per row
@@ -35,6 +34,7 @@ public class Theater  {
 
 	public void fillSeat(Customer customer) {
 		int numCust = customer.getSize();
+		int listSize = seats.size();
 		Node<Customer> searchNode = seats.getHead();
 		Node<Customer> startNode = null;
 		Node<Customer> endNode = null;
@@ -74,11 +74,12 @@ public class Theater  {
 
 	public boolean canFindSeat(int party) {
 		boolean findSeats = false;
+		int listSize = seats.size();
 		Node<Customer> currSeat = seats.getHead();
 		if((totalSeats - listSize) > party) {
 			findSeats = true;
 		}
-		else if((party + filledSeats) <= totalSeats) {
+		else if((party + filledSeats) < totalSeats) {
 			int takingSeats = 0;
 			while(!findSeats || currSeat.getNext() != null) {
 				if(currSeat.getItem() == null) {
