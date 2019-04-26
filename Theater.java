@@ -64,10 +64,7 @@ public class Theater  {
 			}
 			endNode = searchNode;
 		}
-		if(emptySeats != numCust) {
-			System.out.println("Not enough seats ajacent for party");
-		}
-		else {
+		if(emptySeats == numCust) {
 			while(!(startNode.equals(endNode))) {
 				startNode.setItem(customer);
 				startNode = startNode.getNext();
