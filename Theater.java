@@ -74,8 +74,8 @@ public class Theater  {
 		Node<Customer> endNode = null;
 		int emptySeats = 0;
 		//if((filledSeats + numCust) < totalSeats) {
-		if((totalSeats - listSize) > numCust) {
-			for(int i = 0; i <= numCust; i++) {
+		if((totalSeats - listSize) >= numCust) {
+			for(int i = 0; i < numCust; i++) {
 				seats.add(currentSeat, customer);
 				currentSeat++;
 				filledSeats++;
