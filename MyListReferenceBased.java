@@ -1,20 +1,12 @@
 
-// Please note that this code is slightly different from the textbook code 
-//to reflect the fact that the Node class is implemented using data encapsulation
-
-
-// ****************************************************
-// Reference-based implementation of ADT list.
-// ****************************************************
 public class MyListReferenceBased<T> implements ListInterface<T> 
 {
-	// reference to linked list of items
 	private Node<T> head; 
 
 	public MyListReferenceBased() 
 	{
 		head = null;
-	}  // end default constructor
+	}  
 
 	private boolean isIndexValid(int index)
 	{
@@ -35,8 +27,8 @@ public class MyListReferenceBased<T> implements ListInterface<T>
 			isEmpty = true;
 		}
 		return isEmpty;
-	}  // end isEmpty
-	
+	} 
+
 	public int size() 
 	{
 		int numItems = 0;
@@ -47,7 +39,7 @@ public class MyListReferenceBased<T> implements ListInterface<T>
 			curr = curr.getNext();
 		}
 		return numItems;
-	}  // end size
+	} 
 
 	public String toString()
 	{
@@ -72,13 +64,6 @@ public class MyListReferenceBased<T> implements ListInterface<T>
 
 	private Node<T> find(int index) 
 	{
-		// --------------------------------------------------
-		// Locates a specified node in a linked list.
-		// Precondition: index is the number of the desired
-		// node. Assumes that 0 <= index <= numItems 
-		// Postcondition: Returns a reference to the desired 
-		// node.
-		// --------------------------------------------------
 		Node<T> curr = head;
 		if(!isIndexValid(index))
 		{
@@ -89,17 +74,16 @@ public class MyListReferenceBased<T> implements ListInterface<T>
 			for (int i = 0; i < index; i++) 
 			{
 				curr = curr.getNext();
-			} // end for
+			}
 		}
 		return curr;
-	} // end find
+	}
 
 	public T get(int index) 
 			throws ListIndexOutOfBoundsException 
 	{
 		if (isIndexValid(index)) 
 		{
-			// get reference to node, then data in node
 			Node<T> curr = find(index);
 			T dataItem = curr.getItem();
 			return dataItem;
@@ -109,8 +93,8 @@ public class MyListReferenceBased<T> implements ListInterface<T>
 			throw new ListIndexOutOfBoundsException(
 					"List index out of bounds exception on get");
 
-		} // end if
-	} // end get
+		} 
+	} 
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void add(int index, T item)
@@ -120,16 +104,12 @@ public class MyListReferenceBased<T> implements ListInterface<T>
 		{
 			if (index == 0) 
 			{
-				// insert the new node containing item at
-				// beginning of list
 				Node<T> newNode = new Node(item, head);
 				head = newNode;
 			} 
 			else 
 			{
 				Node<T> prev = find(index-1);
-				// insert the new node containing item after 
-				// the node that prev references
 				Node<T> newNode = new Node(item, prev.getNext());
 				prev.setNext(newNode);
 			} // end if
@@ -138,8 +118,8 @@ public class MyListReferenceBased<T> implements ListInterface<T>
 		{
 			throw new ListIndexOutOfBoundsException(
 					"List index out of bounds exception on add");
-		} // end if
-	}  // end add
+		}
+	}  
 
 	public void remove(int index) 
 			throws ListIndexOutOfBoundsException 
@@ -154,27 +134,24 @@ public class MyListReferenceBased<T> implements ListInterface<T>
 			{
 				if (index == 0) 
 				{
-					// delete the first node from the list
 					head = head.getNext();
 				} 
 				else 
 				{
 					Node<T> prev = find(index-1);
-					// delete the node after the node that prev
-					// references, save reference to node
 					Node<T> curr = prev.getNext(); 
 					prev.setNext(curr.getNext());
-				} // end if
-			} // end if
+				} 
+			} 
 			else 
 			{
 				System.out.println("Position specified is out of range!");
 				throw new ListIndexOutOfBoundsException(
 						"List index out of bounds exception on remove");
-			} // end if
+			}
 
 		}
-	}   // end remove
+	}   
 
 	public void removeAll() 
 	{
@@ -182,27 +159,50 @@ public class MyListReferenceBased<T> implements ListInterface<T>
 		{
 			System.out.println("List empty... Nothing to remove.");
 		}
-		else								// setting head to null causes list to be
-		{									// unreachable and thus marked for garbage 
-			head = null;					// collection
+		else								
+		{									 
+			head = null;				
 		}
 
-	} // end removeAll
-	
+	} 
+
 	public Node<T> getHead()
 	{
 		return head;
 	}
 
 	public void add(Customer customer) {
-			//ADD CUSTOMER TO END OF LINE
+		if (size() == 0) 
+		{
+			Node<T> newNode = new Node(customer, head);
+			head = newNode;
+		} 
+		else 
+		{
+			Node<T> node = head;
+			while(node.getNext() != null) {
+				node = node.getNext();
+			}
+			node.setNext(new Node(customer, null));
+		} 
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-} // end ListReferenceBased
+	public boolean findLineCustomer(String name) {
+		Node<T> node = head;
+		
+		boolean result = false;
+		while(node != null && !result) {
+			if(name.equalsIgnoreCase(((Customer) node.getItem()).getName())) {
+				result = true;				
+			} else {
+				node = node.getNext();
+			}
+		}
+		
+		return result;
+		
+	}
+
+}
+
+
