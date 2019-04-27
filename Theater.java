@@ -30,7 +30,7 @@ public class Theater  {
 	/**
 	 * Gives back the number of rows
 	 * 
-	 * @return
+	 * @return int
 	 */
 	public int getRows() {
 		return rows;
@@ -39,7 +39,7 @@ public class Theater  {
 	/**
 	 * Gives back the number of seats per row
 	 * 
-	 * @return
+	 * @return int
 	 */
 	public int getSeatsPerRow() {
 		return seatsPerRow;
@@ -48,7 +48,7 @@ public class Theater  {
 	/**
 	 * Checks if movie is empty
 	 * 
-	 * @return
+	 * @return boolean
 	 */
 	public boolean isEmpty() {
 		return filledSeats == 0;
@@ -56,7 +56,7 @@ public class Theater  {
 
 	/**
 	 * Checks if movie is full
-	 * @return
+	 * @return boolean
 	 */
 	public boolean isMovieFull() {
 		return filledSeats == totalSeats;
@@ -110,7 +110,7 @@ public class Theater  {
 	 * Checks if whether the customer (and their group) can be given seats
 	 * @param party		The number of people in the customer's group
 	 * 
-	 * @return
+	 * @return boolean
 	 */
 	public boolean canFindSeat(int party) {
 		boolean findSeats = false;
@@ -148,7 +148,7 @@ public class Theater  {
 	 * Finds the customer by name
 	 * @param name		The name of the customer
 	 * 
-	 * @return
+	 * @return boolean
 	 */
 	public boolean findCustomer(String name) {
 		boolean result = false;
@@ -184,7 +184,7 @@ public class Theater  {
 	 * The customer leaves the movie and their seat becomes empty
 	 * 
 	 * @param custName		The customer name
-	 * @return
+	 * @return boolean
 	 */
 	public boolean customerLeave(String custName) {
 		boolean customerFound = false;
