@@ -2,6 +2,12 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+/**
+ * MovieTheater deals with the customers getting into the three different lines
+ * 
+ * @author Patrick Moore
+ *
+ */
 public class MovieTheater {
 	static BufferedReader stdin = new BufferedReader (new InputStreamReader(System.in));
 
@@ -19,7 +25,13 @@ public class MovieTheater {
 
 	int currentLine = 1;
 
-
+	/**
+	 * Sets the theaters dumbo and shazam as well as the ticket price
+	 * 
+	 * @param ticketPrice		User sets the ticket price
+	 * @param dumbo				The dumbo movie seats
+	 * @param shazam			The shazam movie seats
+	 */
 	public MovieTheater(double ticketPrice, Theater dumbo, Theater shazam) {
 		super();
 		this.ticketPrice = ticketPrice;
@@ -31,20 +43,21 @@ public class MovieTheater {
 
 	}
 
-
+	/**
+	 * Gives back the ticket price
+	 * 
+	 * @return	double ticketPrice
+	 */
 	public double getTicketPrice() {
 		return ticketPrice;
 	}
-
-	public Theater getDumbo() {
-		return Dumbo;
-	}
-
-
-	public Theater getShazam() {
-		return Shazam;
-	}
-
+	
+	/**
+	 * Finds a customer in the lines by name
+	 * 
+	 * @param name 		The name of the customer
+	 * @return boolean
+	 */
 	public boolean hasCustomer(String name) {
 		boolean custFound = false;
 		if(Dumbo.findCustomer(name) || Shazam.findCustomer(name) || 
@@ -55,12 +68,22 @@ public class MovieTheater {
 
 		return custFound;
 	}
-
+	
+	/**
+	 * Gives back all total sales
+	 * 
+	 * @return double 
+	 */
 	public double getTotalTicketSales() {
 		return totalTicketSales;
 	}
 
-
+	/**
+	 * Determines which line the customer goes to
+	 * 
+	 * @param customer		The customer and their information
+	 * @param hasChild		Checks if group has a child
+	 */
 	public void addToLine(Customer customer, boolean hasChild) {
 
 		//INCOMPLETE
@@ -91,7 +114,12 @@ public class MovieTheater {
 		}
 	}
 
-
+	/**
+	 * Serves a customer at the front of the line
+	 * 
+	 * @param firstLine		Which line is being served
+	 * @return Customer
+	 */
 	public Customer serveLine(int firstLine) throws IOException {
 
 		if(firstLine != 0) {
@@ -145,7 +173,13 @@ public class MovieTheater {
 		return serving;
 	}
 
-
+	/**
+	 * Customer buys a ticket
+	 * 
+	 * @param cust			The customer and their information
+	 * @param rejected		number of times customer has been rejected from seeing movie 
+	 * @return boolean
+	 */
 	public boolean buyingTickets(Customer cust, int rejected) throws IOException {
 
 		boolean bought = false;
@@ -182,7 +216,11 @@ public class MovieTheater {
 		return bought;
 	} 	
 
-
+	/**
+	 * Customer leaves the movie theater
+	 * 
+	 * @param removeName		The customer that is leaving
+	 */
 	public void customerLeaves(String removeName) {
 
 		//CHANGED TO BOOLEAN IN GITHUB
@@ -196,6 +234,9 @@ public class MovieTheater {
 	}
 
 
+	/**
+	 * Displays the customers in the lines
+	 */
 	public void displayLines() {
 		if(RegLine1.isEmpty()) {
 			System.out.println("No customers in the first line!");
@@ -275,7 +316,9 @@ public class MovieTheater {
 
 	}
 
-
+	/**
+	 * Shows all ticket sales and earnings from all the movies
+	 */
 	public void ticketSales() {
 		System.out.println("	" + ShazamTickets + " tickets have been sold for the Shazam! Movie.");
 		System.out.println("	" + DumboTickets + " tickets have been sold for the Dumbo Movie.");
