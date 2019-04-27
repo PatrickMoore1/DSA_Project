@@ -114,6 +114,7 @@ public class Theater  {
 	 */
 	public boolean canFindSeat(int party) {
 		boolean findSeats = false;
+		boolean searching = true;
 		int listSize = seats.size();
 		Node<Customer> currSeat = seats.getHead();
 		if((totalSeats - listSize) >= party) {
@@ -121,14 +122,18 @@ public class Theater  {
 		}
 		else if((party + filledSeats) <= totalSeats) {
 			int takingSeats = 0;
-			while(!findSeats || currSeat.getNext() != null) {
+			while(searching && !findSeats || currSeat.getNext() != null) {
 				if(currSeat.getItem() == null) {
 					takingSeats++;
 					currSeat = currSeat.getNext();
 				}
 				else {
 					takingSeats = 0;
-					currSeat = currSeat.getNext();
+					if(currSeat.getNext() != null) {
+						currSeat = currSeat.getNext();
+					} else {
+						searching = false;
+					}
 
 				}
 				if(takingSeats == party) {
@@ -185,7 +190,7 @@ public class Theater  {
 		boolean customerFound = false;
 		int amountRemoved = 0;
 		Node<Customer> searchCust = seats.getHead();
-		for(int i = 0; i < totalSeats && searchCust.getNext() != null; i++) {
+		for(int i = 0; i <= totalSeats && searchCust != null; i++) {
 			if(searchCust.getItem() == null) {
 				searchCust = searchCust.getNext();
 			}
