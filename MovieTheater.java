@@ -3,7 +3,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 /**
- * MovieTheater deals with the customers getting into the three different lines
+ * MovieTheater deals with the customers getting into the three different lines, serving the 
+ * customers, and keeping track of ticket sales.
  * 
  * @author Patrick Moore
  *
