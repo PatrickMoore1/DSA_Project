@@ -108,8 +108,6 @@ public class MovieTheater {
 			} else {
 				if(currentLine == 1) {
 					if(Express.isEmpty()) {
-						System.out.println("There are no customers waiting in the Express line.");
-						System.out.println("Switching to serve Regular Line 1");
 						currentLine++;
 					} else {
 						serving = Express.get(0);
@@ -121,8 +119,6 @@ public class MovieTheater {
 					}
 				} else if(currentLine == 2) {
 					if(RegLine1.isEmpty()) {
-						System.out.println("There are no customers waiting in Reg Line 1.");
-						System.out.println("Switching to serve Regular Line 2");
 						currentLine++;
 					} else {
 						serving = RegLine1.get(0);
@@ -134,8 +130,6 @@ public class MovieTheater {
 					}
 				} else {
 					if(RegLine2.isEmpty()) {
-						System.out.println("There are no customers waiting in Reg Line 2.");
-						System.out.println("Switching to serve the Express line.");
 						currentLine = 1;
 					} else {
 						serving = RegLine2.get(0);
@@ -161,16 +155,11 @@ public class MovieTheater {
 		if(cust.getWatchDumbo()) {
 			movie = Dumbo;
 			isDumbo = true;
-			System.out.println("Seeing Dumbo");
-
 		} else {
 			movie = Shazam;
 			isDumbo = false;
-			System.out.println("Seeing Shazam");
-
 		}
 		if(movie.canFindSeat(cust.getSize())) { 
-			System.out.println("Success?");
 			movie.fillSeat(cust);
 			bought = true;
 			totalTicketSales += ticketPrice * cust.getSize();
